@@ -2,8 +2,10 @@ const fs = require('fs')
 let [pathName, lang, locale] = process.argv.slice(2)
 
 //Language Handling Above
-lang = lang.toUpperCase()
-locale = locale.toUpperCase()
+if (lang) lang = lang.toUpperCase()
+else lang = 'No Selection'
+if (locale) locale = locale.toUpperCase()
+else locale = 'No Selection'
 let languages = ['ENGLISH', 'ESPANOL']
 let locales = [['US', 'UK'], ['MEX', 'SP']]
 let messages = [[`You have selected '%s' as your language.`, `You have selected '%s' as your locale.`,
