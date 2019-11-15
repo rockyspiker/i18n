@@ -1,46 +1,100 @@
 const fs = require('fs')
-let [pathName, lang, locale] = process.argv.slice(2)
+let args = process.argv.slice(2)
 
-//Language Handling Above
-if (lang) lang = lang.toUpperCase()
-else lang = 'No Selection'
-if (locale) locale = locale.toUpperCase()
-else locale = 'No Selection'
-let languages = ['ENGLISH', 'ESPANOL']
-let locales = [['US', 'UK'], ['MEX', 'SP']]
-let messages = [[`You have selected '%s' as your language.`, `You have selected '%s' as your locale.`,
-    `'%s' is not a valid locale option. Defaulting locale to '%s'.`], [`Ha selectado '%s' como su idioma.`,
-    `Ha selectado '%s' como su configuración regional.`,
-    `'%s' no es una opción de configuración regional válida. Configuración regional predeterminada a '%s'.`]]
-let langNum = 0
-let localeNum = 0
-let validLang = false
-let validLocale = false
+//List of message codes
+const LANG_SELECTED = 0
+const LOCALE_SELECTED = 1
+const LOCALE_ERROR = 2
+const HELP_MSG = 3
 
-for (let num in languages) {
-    if (lang === languages[num]) {
-        langNum = num
-        validLang = true
-        break;
-    }
+if (args.length < 1) {
+    console.log(`You may enter 'help' if you need assistance with the program.\nYou may also type 'lang=en' (or your prefered language) and 'loc=us' (or your prefered locale) to run the program with those options.`)
+    process.exit()
 }
-if (validLang === true) {
-    for (let num in locales[langNum]) {
-        if (locale === locales[langNum][num]) {
-            localeNum = num
-            validLocale = true
-            break;
+else if (args.length > 3) {
+    console.log(`Too many inputs. Please type 'help' for assistance with the program.\nYou may also type 'lang=en' (or your prefered language) and 'loc=us' (or your prefered locale) to run the program with those options.`)
+    process.exit()
+}
+
+//Default values
+let lang = 'en'
+let loc = 'us'
+
+if (args[0] === 'help') {
+    console.log(`Type 'lang=en' (or prefered language) and 'loc=us' (or your prefered locale) to run the program with those options.`)
+    if (args[1] && args[1].startsWith('lang=')) {
+        lang = args[1].slice(5)
+        helpCall(lang)
+    }
+    else helpCall()
+}
+
+// let msgFile = lang + '/' + loc + '.txt'
+// let msg = fs.readFileSync(msgFile).toString().split("\n")
+
+function helpCall(helpLang) {
+    if (helpLang) {
+        const stats = fs.statSync(helpLang)
+        if (stats.isDirectory()) {
+            console.log(` Locales of %s:`, helpLang)
+            let locales = fs.readdirSync(helpLang)
+            for (let locale in locales) {
+                console.log(`  ` + locales[locale].slice(0, 2))
+            }
         }
     }
+    else {
+        fs.readdirSync('.').forEach(file => {
+            if (file.length === 2) {
+                console.log(`Language: ` + file)
+                helpCall(file)
+            }
+        })
+    }
 }
-if (validLang === true) {
-    console.log(messages[langNum][0], languages[langNum])
-    if (validLocale === true) console.log(messages[langNum][1], locales[langNum][localeNum])
-    else console.log(messages[langNum][2], locale, locales[langNum][localeNum])
-}
-else {
-    console.log(`'%s' is not a valid language option. Defaulting language to '%s' and locale to '%s'.`, lang, languages[langNum], locales[langNum][localeNum])
-}
+
+//////////////////////////////////////////////////////////////////////
+
+// //Language Handling Above
+// if (lang) lang = lang.toUpperCase()
+// else lang = 'No Selection'
+// if (locale) locale = locale.toUpperCase()
+// else locale = 'No Selection'
+// let languages = ['ENGLISH', 'ESPANOL']
+// let locales = [['US', 'UK'], ['MEX', 'SP']]
+// let messages = [[`You have selected '%s' as your language.`, `You have selected '%s' as your locale.`,
+//     `'%s' is not a valid locale option. Defaulting locale to '%s'.`], [`Ha selectado '%s' como su idioma.`,
+//     `Ha selectado '%s' como su configuración regional.`,
+//     `'%s' no es una opción de configuración regional válida. Configuración regional predeterminada a '%s'.`]]
+// let langNum = 0
+// let localeNum = 0
+// let validLang = false
+// let validLocale = false
+
+// for (let num in languages) {
+//     if (lang === languages[num]) {
+//         langNum = num
+//         validLang = true
+//         break;
+//     }
+// }
+// if (validLang === true) {
+//     for (let num in locales[langNum]) {
+//         if (locale === locales[langNum][num]) {
+//             localeNum = num
+//             validLocale = true
+//             break;
+//         }
+//     }
+// }
+// if (validLang === true) {
+//     console.log(messages[langNum][0], languages[langNum])
+//     if (validLocale === true) console.log(messages[langNum][1], locales[langNum][localeNum])
+//     else console.log(messages[langNum][2], locale, locales[langNum][localeNum])
+// }
+// else {
+//     console.log(`'%s' is not a valid language option. Defaulting language to '%s' and locale to '%s'.`, lang, languages[langNum], locales[langNum][localeNum])
+// }
 
 // //Diskhog Logic Below
 // let resultsFiles = []
