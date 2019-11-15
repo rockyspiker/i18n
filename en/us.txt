@@ -1,3 +1,4 @@
 You have selected English as your language.
 You have selected US as your locale.
 is not a valid locale option. Defaulting locale to US.
+List of available locales:
