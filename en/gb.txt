@@ -1,2 +1,4 @@
 You have selected English as your language.
 You have selected GB as your locale.
+is not a valid locale option. Defaulting locale to GB.
+List of available locales:
