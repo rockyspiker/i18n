@@ -6,7 +6,8 @@ const LANG_SELECTED = 0
 const LOCALE_SELECTED = 1
 const LOCALE_ERROR = 2
 const LOCALE_DEFAULTED = 3
-const HELP_MSG = 4
+const LOCALE_LIST = 4
+const HELP_MSG = 5
 
 if (args.length < 1) {
     console.log(`You may enter 'help' if you need assistance with the program.\nYou may also type 'lang=en' (or your prefered language) and 'loc=us' (or your prefered locale) to run the program with those options.`)
@@ -20,12 +21,17 @@ else if (args.length > 3) {
 //Default values
 let lang = ''
 let loc = ''
+let needHelp = false
 
-if (args[0] === 'help') {
-    console.log(`Type 'lang=en' (or prefered language) and 'loc=us' (or your prefered locale) to run the program with those options.`)
-    if ((args[1] && args[1].startsWith('lang='))) {
-        lang = args[1].slice(5)
+for (arg of args) {
+    if (arg === 'help') needHelp = true
+    if (arg.startsWith('lang=')) lang = arg.slice(5)
+}
+
+if (needHelp) {
+    if (lang) {
         helpCall(lang)
+        process.exit()
     }
     else {
         helpCall()
@@ -67,7 +73,7 @@ function helpCall(helpLang) {
             let locales = fs.readdirSync(helpLang)
             let msgFile = helpLang + `/` + locales[0]
             let msg = fs.readFileSync(msgFile).toString().split("\n")
-            console.log(`-` + msg[HELP_MSG])
+            console.log(msg[HELP_MSG] + `\n-` + msg[LOCALE_LIST])
             for (let locale in locales) {
                 console.log(`--` + locales[locale].slice(0, 2))
             }
