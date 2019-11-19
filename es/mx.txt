@@ -3,3 +3,4 @@ Ha selectado MX como su configuración regional.
 no es una opción de configuración regional válida.
 Configuración regional predeterminada a MX.
 Lista de configuraciónes regional:
+Escriba 'lang=es' (o idioma preferido) y 'loc=mx' (o su onfiguración regional preferida) para ejecutar el programa con esas opciones.
