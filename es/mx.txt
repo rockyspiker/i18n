@@ -1,4 +1,5 @@
 Ha selectado Español como su idioma.
 Ha selectado MX como su configuración regional.
-no es una opción de configuración regional válida. Configuración regional predeterminada a MX.
+no es una opción de configuración regional válida.
+Configuración regional predeterminada a MX.
 Lista de configuraciónes regional:
