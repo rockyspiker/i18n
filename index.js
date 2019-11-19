@@ -34,13 +34,16 @@ if (args[0] === 'help') {
 
 function helpCall(helpLang) {
     if (helpLang) {
-        const stats = fs.statSync(helpLang)
-        if (stats.isDirectory()) {
-            console.log(` Locales of %s:`, helpLang)
+        if (fs.existsSync(helpLang) && fs.statSync(helpLang).isDirectory()) {
+            console.log(`-Locales of %s:`, helpLang)
             let locales = fs.readdirSync(helpLang)
             for (let locale in locales) {
-                console.log(`  ` + locales[locale].slice(0, 2))
+                console.log(`--` + locales[locale].slice(0, 2))
             }
+        }
+        else {
+            console.log(`Invalid language option. Please type 'help' to list available languages.`)
+            process.exit()
         }
     }
     else {
