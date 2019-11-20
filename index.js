@@ -8,10 +8,10 @@ const LOCALE_ERROR = 2
 const LOCALE_DEFAULTED = 3
 const LOCALE_LIST = 4
 const HELP_MSG = 5
+const LANG_DEFAULTED = 6
 
 if (args.length < 1) {
     console.log(`You may enter 'help' if you need assistance with the program.\nYou may also type 'lang=en' (or your prefered language) and 'loc=us' (or your prefered locale) to run the program with those options.`)
-    process.exit()
 }
 else if (args.length > 3) {
     console.log(`Too many inputs. Please type 'help' for assistance with the program.\nYou may also type 'lang=en' (or your prefered language) and 'loc=us' (or your prefered locale) to run the program with those options.`)
@@ -65,6 +65,11 @@ if (lang && fs.statSync(lang).isDirectory()) {
         let msg = fs.readFileSync(msgFile).toString().split("\n")
         console.log(msg[LANG_SELECTED] + `\n` + msg[LOCALE_DEFAULTED])
     }
+}
+else {
+    let msgFile = `en/us.txt`
+    let msg = fs.readFileSync(msgFile).toString().split("\n")
+    console.log(msg[LANG_DEFAULTED] + `\n` + msg[LOCALE_DEFAULTED])
 }
 
 function helpCall(helpLang) {
