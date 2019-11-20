@@ -39,9 +39,9 @@ if (needHelp) {
     }
 }
 else {
-    for (arg in args) {
-        if (args[arg].startsWith('lang=')) lang = args[arg].slice(5)
-        else if (args[arg].startsWith('loc=')) loc = args[arg].slice(4)
+    for (arg of args) {
+        if (arg.startsWith('lang=')) lang = arg.slice(5)
+        else if (arg.startsWith('loc=')) loc = arg.slice(4)
     }
 }
 
@@ -78,9 +78,9 @@ function helpCall(helpLang) {
             let locales = fs.readdirSync(helpLang)
             let msgFile = helpLang + `/` + locales[0]
             let msg = fs.readFileSync(msgFile).toString().split("\n")
-            console.log(msg[HELP_MSG] + `\n-` + msg[LOCALE_LIST])
+            console.log(`Language: ` + helpLang.toUpperCase() + `\n` + msg[HELP_MSG] + `\n-` + msg[LOCALE_LIST])
             for (let locale in locales) {
-                console.log(`--` + locales[locale].slice(0, 2))
+                console.log(`--` + locales[locale].slice(0, 2).toUpperCase())
             }
         }
         else console.log(`Invalid language option. Please type 'help' to list available languages.`)
@@ -88,7 +88,6 @@ function helpCall(helpLang) {
     else {
         fs.readdirSync('.').forEach(file => {
             if (file.length === 2) {
-                console.log(`Language: ` + file)
                 helpCall(file)
             }
         })
