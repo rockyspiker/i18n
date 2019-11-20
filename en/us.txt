@@ -4,3 +4,4 @@ is not a valid locale option.
 Defaulting locale to US.
 List of available locales:
 Type 'lang=en' (or prefered language) and 'loc=us' (or your prefered locale) to run the program with those options.
+Defaulting language to English
