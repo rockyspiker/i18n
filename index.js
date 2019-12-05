@@ -24,7 +24,7 @@ let loc = ''
 let needHelp = false
 
 for (arg of args) {
-    if (arg === 'help') needHelp = true
+    if (arg === 'help' || arg === '-h') needHelp = true
     if (arg.startsWith('lang=')) lang = arg.slice(5)
 }
 
